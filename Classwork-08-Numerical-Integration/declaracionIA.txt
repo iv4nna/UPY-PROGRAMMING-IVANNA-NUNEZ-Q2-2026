@@ -1,0 +1,36 @@
+Nombre del estudiante: Ivanna Nuñez Hernandez
+
+IA utilizada: Gemini
+
+Fecha de uso: 2026-06-12
+
+Propósito: Consulta
+
+Prompt utilizado:
+
+I have these exercises i need to test but I dont know if my program is able to accept those values of sin(x) and cos(x)? I mean that don't know if I have to add or import what it says below, that math.sin and math.cos, I dont understand, how do i test it? Do i need to import any other thing of math
+
+Archivos suministrados: Captura de pantalla de dos ejercicios para test, codigo en python
+
+Respuesta en crudo (raw):
+Because you already have import math at the very top of your Python file, your program is completely ready for them.
+
+Here is exactly how it works and how to test it.
+Why do you need math.sin?
+
+Your program uses the eval() command, which takes whatever string you type into the console and runs it directly as Python code. If you just type sin(x), Python throws an error because it doesn't recognize that standalone word. It needs the module's "last name" to know where to find the math logic, which is why you have to type math.sin(x) and math.cos(x).
+
+You don't add this into your script; you type it directly into the terminal when the program asks you for the function!
+How to test it in Thonny
+
+Run your program and try this exact sequence for your inputs:
+
+    Left endpoint: Type 0
+
+    Right endpoint: Type pi (Your if b == "pi": block will catch this and perfectly convert it to 3.14159...)
+
+    Function to integrate: Type math.sin(x)
+
+    Method: Type TRM (or whichever you want to test)
+
+The exact mathematical area under sin(x) from 0 to π is exactly 2.0. Since n=1000 in your code, your program should spit out something extremely close, like 2.00.
