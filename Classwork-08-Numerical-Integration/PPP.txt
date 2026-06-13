@@ -1,0 +1,46 @@
+#INPUT
+GET a, b, f_x FROM user
+GET method FROM user
+
+n <- 1000
+area <- 0
+shift <- 0
+constant <- 0
+
+#PROCESS
+IF method IS EQUAL "RRM"
+shift <- 1
+ENDIF
+
+h <- (b - a) / n
+
+IF method IS EQUAL "MPM"
+constant <- h / 2
+ENDIF
+
+IF method IS EQUAL "TRM"
+f_x0 <- EVALUATE f_x AT x = a
+f_x1 <- EVALUATE f_x AT x = b
+
+sum_inter <- 0
+
+FOR i IN RANGE (1, n) DO
+    xi <- a + i*h
+    sum_inter <- sum_inter + EVALUATE f_x AT x = xi
+ENDFOR
+
+area <- (h / 2) * (f_x0 + 2*sum_inter + f_x1)
+
+ELSE
+FOR i IN RANGE (0 + shift, n + shift) DO
+xi <- a + i*h + constant
+
+    height <- EVALUATE f_x AT x = xi
+
+    area <- area + height*h
+ENDFOR
+
+ENDIF
+
+#OUTPUT
+DISPLAY "The integration of " + f_x + " is " + area
