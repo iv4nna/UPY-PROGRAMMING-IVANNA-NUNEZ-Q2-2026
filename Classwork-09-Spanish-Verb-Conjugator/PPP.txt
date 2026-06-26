@@ -1,0 +1,22 @@
+#set the pronouns list
+SET pronouns TO ["Yo", "Tú", "Él", "Nosotros", "Vosotros", "Ellos"]
+    
+#initialize the conjugation endings dictionary
+SET endings TO {
+        "ar": ["o", "as", "a", "amos", "ais", "an"],
+        "er": ["o", "es", "e", "emos", "eis", "en"],
+        "ir": ["o", "es", "e", "imos", "is", "en"]
+        }
+#get the verb from the user
+DISPLAY "Write a spanish verb(ar/er/ir): "
+GET verb 
+#obtain the stem and the ending by slicing
+SET stem TO verb from index 0 up to length - 2
+SET ending TO verb from last 2 characters
+
+SET conjugations TO endings[ending] 
+#conjugate 
+    FOR EACH index, pronoun IN pronouns
+        SET termination TO conjugations[index]
+        DISPLAY pronoun + " " + stem + termination
+    END FOR

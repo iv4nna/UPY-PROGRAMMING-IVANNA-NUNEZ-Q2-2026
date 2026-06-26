@@ -1,0 +1,67 @@
+============================================================
+REPORTE ACADÉMICO - EXPORTACIÓN TXT
+============================================================
+
+
+============================================================
+DECLARACIÓN DE USO DE INTELIGENCIA ARTIFICIAL
+============================================================
+
+Estudiante: Ivanna Nuñez Hernandez
+IA utilizada: Gemini
+Fecha: 2026-06-25
+Propósito: Consulta
+
+Prompt utilizado:
+----------------------------------------
+Pasaré este pseudocodigo a PSEINT, pero como mi PSEINT está en español los comandos cambian, quiero adaptar esto y saber como almacenar los valores de la variable endings en el pseudocodigo en español de pseint, que comandos o como deberia hacer para pasar estas variables y que funcione el programa
+----------------------------------------
+
+Archivos suministrados: Captura de pantalla
+
+Respuesta en crudo:
+----------------------------------------
+Cómo adaptar diccionarios de Python a PSeInt (Enfoque Técnico)
+
+Para pasar un programa de conjugación de Python a PSeInt en español, el principal reto técnico es la variable endings. Python maneja diccionarios con listas adentro (estructuras dinámicas), algo que PSeInt (al ser un intérprete educativo básico) no soporta de forma nativa.
+
+Para lograr almacenar esos valores y que el programa funcione, debes aplicar las siguientes estrategias y comandos en PSeInt:
+1. Crear vectores independientes con Dimension
+
+Como en PSeInt no puedes meter listas dentro de una clave ("ar": [...]), la solución estándar es romper el diccionario y crear tres arreglos independientes (vectores), uno para cada terminación. Para esto se usa el comando Dimension:
+Plaintext
+
+Dimension ar_endings[6], er_endings[6], ir_endings[6]
+
+Nota: PSeInt requiere que declares el tamaño exacto del arreglo antes de usarlo.
+2. Asignar los valores manualmente posicionales (<-)
+
+En Python guardas todo en una sola línea, pero en PSeInt debes asignar cada terminación a su posición correspondiente usando la flecha de asignación <-.
+
+Un detalle crítico aquí es que en PSeInt los índices empiezan en 1 (a diferencia de Python que empiezan en 0). La asignación se hace elemento por elemento:
+Plaintext
+
+ar_endings[1] <- "o"
+ar_endings[2] <- "as"
+# ... y así sucesivamente para cada uno
+
+3. Sustituir la búsqueda del diccionario por un Si...Entonces
+
+En Python accedes a las terminaciones directamente con endings[ending]. En PSeInt, para saber cuál de los tres vectores usar, necesitas meter una estructura condicional Si...Entonces dentro de tu ciclo. De esta forma, el programa evalúa qué tipo de verbo es y extrae la terminación del vector correcto:
+Plaintext
+
+Si ending = "ar" Entonces
+    termination <- ar_endings[index]
+FinSi
+
+4. Manejo de texto con Subcadena y Longitud
+
+Para separar la raíz del verbo y su terminación (lo que en Python haces limpiamente con el slicing [: -2]), en PSeInt necesitas usar las funciones nativas de manipulación de texto:
+
+    Longitud(variable): Para saber cuántas letras tiene el verbo.
+
+    Subcadena(variable, inicio, fin): Para recortar los caracteres exactos que necesitas.
+
+¿Te gustaría que te redacte la estructura completa de cómo quedaría el bucle Para con esta lógica de vectores incorporada, o prefieres que revisemos primero cómo declarar la parte de los pronombres?
+----------------------------------------
+
