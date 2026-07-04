@@ -1,6 +1,6 @@
 config = {}
 
-file = open("config.txt", "r")
+file = open("Classwork-11-The-Mandelbrot-Set/config.txt", "r")
 
 for line in file:
     parameter, value = line.strip().split("=")
@@ -9,7 +9,7 @@ file.close()
 
 width, height, max_iter = config["ancho"], config["alto"], config["max_iter"]
 
-output = open("mandelbrot.csv", "w")
+output = open("Classwork-11-The-Mandelbrot-Set/mandelbrot.csv", "w")
 output.write("row,column,iterations\n")
 
 for row in range(height):
