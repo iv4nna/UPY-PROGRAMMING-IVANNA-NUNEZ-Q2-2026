@@ -1,0 +1,68 @@
+============================================================
+REPORTE ACADÉMICO - EXPORTACIÓN TXT
+============================================================
+
+
+============================================================
+DECLARACIÓN DE USO DE INTELIGENCIA ARTIFICIAL
+============================================================
+
+Estudiante: Ivanna Nuñez Hernandez
+IA utilizada: Gemini
+Fecha: 2026-07-18
+Propósito: Consulta
+
+Prompt utilizado:
+----------------------------------------
+como paso un codigo de bubble sort animado de python a pseint en un solo algoritmo plano para poder generar el diagrama de flujo?? me marca error de que no es un array y no sé como estructurar como que los bucles de la animación de las barras en español sin que marque errores, porque son diferentes los comandos
+----------------------------------------
+
+Respuesta en crudo:
+----------------------------------------
+¡Qué onda! Sí, PSeInt se pone muy especial con los arreglos y cuando intentas meterle lógicas de animación visual de otros lenguajes. Si lo que buscas es estructurar todo en un solo Algoritmo plano para que te genere el diagrama de flujo limpio y sin errores en rojo, te paso la guía de cómo debes acomodar la estructura:
+1. Declara el Arreglo al inicio (Para quitar el error de sintaxis)
+
+PSeInt no entiende las listas dinámicas como Python. Si intentas usar una variable indexada de la nada, te dirá que no corresponde a un arreglo.
+
+    La solución: Justo debajo del título del algoritmo, usa el comando Dimension. Por ejemplo: Dimension numbers(10). Esto le avisa a PSeInt que esa variable es una lista.
+
+    Cambia los corchetes por paréntesis: En PSeInt no se usa numbers[i], tienes que escribirlo con paréntesis obligatoriamente: numbers(i). Si dejas los corchetes, te seguirá marcando error.
+
+2. Estructura de los Bucles de Animación (El "Aplanado")
+
+Como quieres meter el dibujo de las barras dentro del mismo flujo lineal, lo que debes hacer es "replicar" el bucle que dibuja las barras en los momentos exactos del ordenamiento. La estructura lógica debe quedar ordenada así:
+
+    Inicio del Algoritmo
+
+    Definición: Dimension y variables iniciales.
+
+    Bucle Principal (Para sweep = 0 Hasta n - 1 Hacer): El que controla las pasadas del ordenamiento.
+
+        Bucle Secundario (Para pair = 0 Hasta n - 2 - sweep Hacer): El que compara los elementos adyacentes.
+
+            MOMENTO 1 (Dibujo antes del intercambio): Aquí metes un tercer bucle Para i = 0 Hasta n - 1 Hacer que recorra el arreglo, calcule las posiciones de las barras y use un Si...Entonces para pintar de otro color las barras que están en los índices pair y pair + 1.
+
+            CONDICIÓN (Si numbers(pair) > numbers(pair + 1) Entonces):
+
+                Haces el intercambio usando una variable auxiliar (temp = numbers(pair), etc.).
+
+                MOMENTO 2 (Dibujo después del intercambio): Vuelves a meter el bucle Para i = 0 Hasta n - 1 Hacer para actualizar cómo quedaron las barras tras el cambio.
+
+            FinSi
+
+        FinPara
+
+    FinPara
+
+    FinAlgoritmo
+
+3. ¿Qué hacer con los comandos de la librería gráfica?
+
+Como PSeInt no tiene comandos nativos para cosas como limpiar la pantalla del canvas, definir el color exacto o mostrar la ventana con retraso de milisegundos, lo mejor es que escribas esas acciones como comentarios (//) en el lugar exacto donde ocurren. El generador de PSeInt las incluirá en el diagrama como cajitas de texto explicativas, lo cual mantendrá la coherencia del flujo visual sin romper la ejecución del programa.
+4. Nombres y Comandos
+
+Para que no te marque fallos, asegúrate de usar estrictamente los comandos en español comunes de PSeInt para el flujo: Para...Hasta...Hacer, FinPara, Si...Entonces...Sino...FinSi, y el signo = para asignar los valores. El contenido o los nombres de tus variables los puedes dejar en inglés si así lo prefieres para no perder el hilo de tu código original.
+
+Intenta acomodar tus ciclos siguiendo este orden en el editor. Si ves que alguna línea te sigue pataleando o no estás seguro de cómo anidar un Para dentro del otro, me avisas y lo checamos rápido.
+----------------------------------------
+

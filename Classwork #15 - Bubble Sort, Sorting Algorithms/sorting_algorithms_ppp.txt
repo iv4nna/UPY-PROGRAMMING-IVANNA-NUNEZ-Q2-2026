@@ -1,0 +1,53 @@
+IMPORT random module
+IMPORT stddraw module
+
+IMPORT Color from color module
+
+bubble_sort(numbers):
+    n = length of numbers
+    FOR sweep FROM 0 TO n - 1:
+        FOR pair FROM 0 TO n - 2 - sweep:
+            IF numbers[pair] > numbers[pair] + 1 THEN
+                SWAP numbers[pair] AND numbers[pair + 1]
+            ENDIF
+        ENDFOR
+    ENDFOR
+
+draw_bars(numbers, selected = ()):
+    CLEAR stddraw canvas
+    n = length of numbers
+    bar_width = 10.0 / n
+    
+    FOR EACH index i AND value number IN numbers:
+        x = i * bar_width + bar_width / 2
+        IF i IS IN selected THEN
+            color = Color(255, 90, 90)
+        ELSE
+            color = Color(70, 130, 220)
+        ENDIF
+        SET stddraw pen color TO color
+        DRAW stddraw filled rectangle AT (x - bar_width / 2, 0) WITH WIDTH bar_width * 0.9 AND HEIGHT number
+    ENDFOR
+    SHOW stddraw window FOR 500 milliseconds
+
+bubble_sort_animated(numbers):
+    SET stddraw X-scale FROM -0.1 TO 10
+    SET stddraw Y-scale FROM -0.5 TO max(numbers) + 1
+    n = length of numbers
+    
+    FOR sweep FROM 0 TO n - 1:
+        FOR pair FROM 0 TO n - 2 - sweep:
+            CALL draw_bars(numbers, selected = (pair, pair + 1))
+            IF numbers[pair] > numbers[pair + 1] THEN
+                SWAP numbers[pair] AND numbers[pair + 1]
+                CALL draw_bars(numbers, selected = (pair, pair + 1))
+            ENDIF
+        ENDFOR
+    ENDFOR
+    CALL draw_bars(numbers)
+    SHOW stddraw window
+
+numbers = ARRAY OF 10 RANDOM INTEGERS BETWEEN 0 AND 100
+DISPLAY "Before bubble sort: {numbers}"
+CALL bubble_sort_animated(numbers)
+DISPLAY "After bubble sort: {numbers}"
