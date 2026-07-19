@@ -1,0 +1,67 @@
+INITIALIZE config AS empty dictionary
+
+OPEN "Classwork-11-The-Mandelbrot-Set/config.txt" FOR READING AS file
+READ all lines FROM file INTO lines
+
+FOR EACH line IN lines DO
+    REMOVE whitespace AND SPLIT line BY "=" INTO parameter, value
+
+    IF "." IS IN value THEN
+        STORE FLOAT(value) IN config[parameter]
+    ELSE
+        STORE INTEGER(value) IN config[parameter]
+    END IF
+END FOR
+CLOSE file
+
+DISPLAY config
+
+#read csv data
+OPEN "Classwork-11-The-Mandelbrot-Set/mandelbrot.csv" FOR READING AS file
+READ all lines FROM file INTO lines
+CLOSE file
+
+#remove header
+REMOVE first element FROM lines
+
+#config values
+SET max_iter TO config["max_iter"]
+SET width TO config["ancho"]
+SET height TO config["alto"]
+
+CREATE RGB image OF SIZE (width, height)
+
+FOR EACH line IN lines DO
+    REMOVE whitespace AND SPLIT line BY "," INTO row, column, iterations
+    CONVERT row TO INTEGER
+    CONVERT column TO INTEGER
+    CONVERT iterations TO INTEGER
+
+    IF iterations = max_iter THEN
+        SET red TO 0
+        SET green TO 0
+        SET blue TO 0
+    ELSE
+        IF max_iter > 500 THEN
+            SET red TO (iterations × 15) MOD 256
+            SET green TO (iterations × 7) MOD 256
+            SET blue TO (iterations × 2) MOD 256
+        ELSE
+            SET brightness TO INTEGER((iterations / max_iter) × 255)
+            SET red TO brightness
+            SET green TO brightness
+            SET blue TO brightness
+        END IF
+    END IF
+    SET pixel AT (column, row) TO (red, green, blue)
+END FOR
+
+CONVERT image TO RGB
+
+IF max_iter > 500 THEN
+    SAVE image AS "hipocampos.png"
+ELSE
+    SAVE image AS "mandelbrot.png"
+END IF
+
+DISPLAY "DONE"

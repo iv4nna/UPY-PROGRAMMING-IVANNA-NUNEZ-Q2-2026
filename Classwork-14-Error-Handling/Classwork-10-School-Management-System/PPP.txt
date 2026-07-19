@@ -1,0 +1,110 @@
+#REQUIRED STRUCTURES
+INITIALIZE users dictionary with username, password, rol, and name
+INITIALIZE subjects tuple with all 7 course names
+INITIALIZE notes dictionary containing each student's grades per subject
+
+#LOGIN
+SET logged_in TO False
+
+WHILE NOT logged_in DO
+    DISPLAY "User: "
+    READ username
+    DISPLAY "Password: "
+    READ password
+    
+    IF username exists in users AND users[username]['password'] = password THEN
+        SET logged_in TO True
+        DISPLAY 'Bienvenid@, ', users[username]['name'], '(', users[username]['rol'], ')'
+        DISPLAY '=========================================='
+    ELSE
+        DISPLAY 'Invalid username or password. Try again.'
+    ENDIF
+ENDWHILE
+
+#ROLE
+SET user_role TO users[username]['rol']
+
+IF user_role = 'student' THEN
+    DISPLAY 'School Report\n'
+    
+    INITIALIZE approved AS empty Set
+    INITIALIZE pending AS empty Set
+    
+    FOR EACH subject IN subjects DO
+        SET grade TO notes[username][subject]
+        DISPLAY subject, ':', grade
+        
+        IF grade >= 8.0 THEN
+            ADD subject TO approved
+        ELSE
+            ADD subject TO pending
+        ENDIF
+    ENDFOR
+    
+    DISPLAY 'Approved:', approved
+    DISPLAY 'Pending:', pending
+
+#Proffesor menu
+ELSE IF user_role = 'professor' THEN
+    DISPLAY "Students"
+    FOR EACH u_id IN users DO
+        IF users[u_id]['rol'] = 'student' THEN
+            DISPLAY "User:", u_id, "| Student:", users[u_id]['name']
+        ENDIF
+    ENDFOR
+    DISPLAY ""
+    
+    DISPLAY "Student to grade (username): "
+    READ username_to_grade
+    
+    IF username_to_grade exists in notes THEN
+        DISPLAY "Subject to grade: "
+        READ subject_to_grade
+        
+        IF subject_to_grade exists in subjects THEN
+            DISPLAY "New grade: "
+            READ new_grade AS float
+            SET old_grade TO notes[username_to_grade][subject_to_grade]
+            
+            DISPLAY "Do you confirm (yes/no)?"
+            DISPLAY " ", subject_to_grade, ": ", old_grade, " ==> ", new_grade, "\n"
+            READ confirm
+            
+            IF confirm = 'yes' THEN
+                SET notes[username_to_grade][subject_to_grade] TO new_grade
+                DISPLAY "Grade updated!"
+                DISPLAY notes[username_to_grade]
+            ELSE
+                DISPLAY "Cancelled."
+            ENDIF
+        ELSE
+            DISPLAY "Invalid subject"
+        ENDIF
+    ELSE
+        DISPLAY "Invalid student"
+    ENDIF
+
+#Coordinator menu
+ELSE IF user_role = 'coordinator' THEN
+    DISPLAY "Professors"
+    #Loop
+    FOR EACH u_id IN users DO
+        IF users[u_id]['rol'] = 'professor' THEN
+            DISPLAY "User:", u_id, "| Professor:", users[u_id]['name']
+        ENDIF
+    ENDFOR
+    
+    DISPLAY "\nStudents"
+    FOR EACH u_id IN users DO
+        IF users[u_id]['rol'] = 'student' THEN
+            DISPLAY "User:", u_id, "| Student:", users[u_id]['name']
+        ENDIF
+    ENDFOR
+    
+    DISPLAY "\nRecords\n"
+    FOR EACH u_id IN notes DO
+        DISPLAY "Grades for ", users[u_id]['name'], " :"
+        DISPLAY notes[u_id]
+        DISPLAY "--------------------"
+    ENDFOR
+ENDIF
